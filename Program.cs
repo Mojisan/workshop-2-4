@@ -8,7 +8,8 @@ class Program {
         //High();
         //even();
         //arrange();
-        tictactoe();
+        //tictactoe();
+        hangman();
     }
 
     static void compare() {
@@ -122,7 +123,7 @@ class Program {
         }
     }
     static void tictactoe() {
-        //texttictactoe();
+        texttictactoe();
         machanicttt();
     }
 
@@ -130,59 +131,98 @@ class Program {
         Console.WriteLine("Tic Tac Toe Game!!");
         Console.WriteLine();
         Console.WriteLine("___________________");
-        Console.WriteLine("| [0] | [1] | [2] |");
+        Console.WriteLine("| [1] | [2] | [3] |");
         Console.WriteLine("|_____|_____|_____|");
-        Console.WriteLine("| [3] | [4] | [5] |");
+        Console.WriteLine("| [4] | [5] | [6] |");
         Console.WriteLine("|_____|_____|_____|");
-        Console.WriteLine("| [6] | [7] | [8] |");
+        Console.WriteLine("| [7] | [8] | [9] |");
         Console.WriteLine("|_____|_____|_____|");
         Console.WriteLine();
     }
 
     static void machanicttt() {
-        string[] num = new string[9] {"-","-","-","-","-","-","-","-","-"};
+        string[] num = new string[9] {"1","2","3","4","5","6","7","8","9"};
+        int i = 0;
+        bool check = true;
         Console.WriteLine("Start!!");
-        for(int i = 0; i <= 8; i++) {
+            while(i <= 8 && check == true) {
                 int n;
                 if (i % 2 == 0) {
                     Console.Write("Turn X : Input position : ");
                     n = Convert.ToInt32(Console.ReadLine());
                     if (n >= 0 && n <= 8) {
-                        num[n] = "X";
+                        num[n-1] = "X";
+                        i++;
                     }
                     else {
                         Console.WriteLine("Please input number 0 - 8");
-                        continue;
                     }
                 }
                 else {
                     Console.Write("Turn O : Input position : ");
                     n = Convert.ToInt32(Console.ReadLine());
                     if (n >= 0 && n <= 8) {
-                        num[n] = "O";
+                        num[n-1] = "O";
+                        i++;
                     }
                     else {
                         Console.WriteLine("Please input number 0 - 8");
-                        continue;
                     }
+                }
+                if(beforeCheck(num[0], num[1], num[2])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[3], num[4], num[5])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[6], num[7], num[8])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[0], num[3], num[6])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[1], num[4], num[7])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[2], num[5], num[8])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[0], num[4], num[8])) {
+                    check = false;
+                }
+                else if(beforeCheck(num[2], num[4], num[6])) {
+                    check = false;
+                }
+                else {
+                    check = true;
                 }
                 Console.WriteLine(" {0}  {1}  {2} ", num[0], num[1], num[2]);
                 Console.WriteLine(" {0}  {1}  {2} ", num[3], num[4], num[5]);
                 Console.WriteLine(" {0}  {1}  {2} ", num[6], num[7], num[8]);
+            }
+        if (i % 2 == 0) {
+            Console.WriteLine("O is Winner!!");
+        }
+        else {
+            Console.WriteLine("X is Winner!!");
         }
     }
 
-    static void turn (int p, int r) {
-        string[] num = new string[9];
-        if (r % 2 == 0) {
-            num[p] = "X";
+    static bool beforeCheck(string x, string y, string z) {
+        if (x == y && y == z) {
+            return true;
         }
-        else {
-            num[p] = "O";
-        }
+        return false;
+    }
 
-        Console.WriteLine(" {0}  {1}  {2}", num[0], num[1], num[2]);
-        Console.WriteLine(" {0}  {1}  {2}", num[3], num[4], num[5]);
-        Console.WriteLine(" {0}  {1}  {2}", num[6], num[7], num[8]);
+    static void hangman() {
+        string word = "goat";
+        string[] answer = new string[word.Length];
+        Console.WriteLine("Welcome to Hangman!!!");
+        for (int i = 0; i <= word.Length - 1; i++) {
+            answer[i] = "*";
+            Console.Write("{0}", answer[i]);
+        }
+        
     }
 }
