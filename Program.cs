@@ -10,6 +10,8 @@ class Program {
         //arrange();
         //tictactoe();
         hangman();
+        //testScore();
+        //lineFormation();
     }
 
     static void compare() {
@@ -216,13 +218,114 @@ class Program {
     }
 
     static void hangman() {
-        string word = "goat";
+        string word = "thanapa";
+        char input;
+        bool check = true;
         string[] answer = new string[word.Length];
         Console.WriteLine("Welcome to Hangman!!!");
         for (int i = 0; i <= word.Length - 1; i++) {
-            answer[i] = "*";
-            Console.Write("{0}", answer[i]);
+                answer[i] = "*";
+                Console.Write("{0}", answer[i]);
+            }
+        Console.WriteLine();
+        while(check) {
+            input = Convert.ToChar(Console.ReadLine());
+            for (int i = 0; i <= word.Length - 1; i++) {
+                int a = 0;
+                for (int t = 0; t <= word.Length - 1; t++) {
+                    if (checkHangman(answer[t])) {
+                        a++;
+                    }
+                }
+                if (word.Length - 1 == a && input == word[i]) {
+                    answer[i] = Convert.ToString(input);
+                    Console.Write("{0}", answer[i]);
+                    check = false;
+                }
+                else if (input == word[i]) {
+                    answer[i] = Convert.ToString(input);
+                    Console.Write("{0}", answer[i]);
+                }
+                else {
+                    Console.Write("{0}", answer[i]);
+                }
+            }
+            Console.WriteLine();
         }
-        
+        Console.WriteLine("You Win!!");
+    }
+    
+
+    static bool checkHangman(string x) {
+        if (x == "*") return false;
+        return true;
+    }
+
+    static void testScore() {
+        float[ , ] score = new float[150,5];
+        for (int row = 0; row < 150; row++) {
+            for (int col = 0; col < 5; col++) {
+                Console.Write("Input score {0} : ",col);
+                score[row,col] = float.Parse(Console.ReadLine());
+            }
+            float sum = 0;
+            for (int col = 0; col < 5; col++) {
+                sum += score[row,col];
+            }
+            Console.WriteLine(sum);
+        }
+        /* for (int row = 0; row < 150; row++) {
+            float sum = 0;
+            for (int col = 0; col < 5; col++) {
+                sum += score[row,col];
+            }
+            Console.WriteLine(sum);
+        } */
+    }
+
+    static void lineFormation() {
+        Console.Write("Input number of people : ");
+        int num = int.Parse(Console.ReadLine());
+        Console.Write("Input number of rows in front of the board : ");
+        int numC = int.Parse(Console.ReadLine());
+        int numR = (num / numC) + 1;
+        string[ , ] name = new string [numR, numC];
+        for (int row = 0; row < numR; row++) {
+            for (int col = 0; col < numC; col++) {
+                Console.Write("Input name {0} : ",col + 1);
+                name[row,col] = Console.ReadLine();
+            }
+        }
+        Console.Write("Input col : ");
+        int c = int.Parse(Console.ReadLine());
+        Console.Write("Input row : ");
+        int r = int.Parse(Console.ReadLine());
+        /* Console.WriteLine(Getname(name[r, c], c, r, "No one is there.")); */
+    }
+
+    static string Getname(string[,] name, int col, int row, string defaultName) {
+        if (col < name.GetLength(0) && row < name.GetLength(1)) {
+            return name[col, row];
+        }
+        return defaultName;
+    }
+
+    struct Employee {
+        public string name;
+        public string surname;
+        public string address;
+        public float salary;
+        public Employee(string name, string surname, string address, float salary) {
+            this.name = name;
+            this.surname = surname;
+            this.address = address;
+            this.salary =salary;
+        }
+    }
+
+    static void employeeTest() {
+        Employee employee = new Employee("Jiramet", "Angkuthanyarot", "Bangkok", 30000000.0f);
+        employee.salary = 700.0f;
+
     }
 }
